@@ -10,7 +10,7 @@ const Product = () => {
 
   useEffect(() => {
     const fetchProduct = async () => {
-      const response = await fetch(`https://fakestoreapi.com/products/${id}`)
+      const response = await fetch(`meating-point.innofabrik.de/api/products/${id}`)
       const data = await response.json()
       console.log(data)
       setProduct(data)

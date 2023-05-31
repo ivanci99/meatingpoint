@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import FeatureCard from '../FeatureCard'
+import ButcheryCard from '../ButcheryCard'
 
 
 
@@ -13,20 +13,22 @@ const Categories = () => {
   ];
 
   const [categories, setCategories] = useState([])
+  const [butcheries, setButcheries] = useState([])
+
   useEffect(() => {
-    const fetchCategories = async () => {
-      const response = await fetch((('https://fakestoreapi.com/products/categories')))
+    const fetchButcheries = async () => {
+      const response = await fetch((('http://meating-point.innofabrik.de/api/butcheries')))
       const data = await response.json()
       console.log(data, 'data')
-      setCategories(data)
+      setButcheries(data)
     }
-    fetchCategories()
+    fetchButcheries()
   }, [])
 
-  if (categories.length === 0) return <div>Loading.....</div>
+  if (butcheries.length === 0) return <div>Loading.....</div>
 
   return (
-      <FeatureCard cards={categories}/>
+      <ButcheryCard cards={butcheries}/>
   )
 }
 

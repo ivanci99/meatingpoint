@@ -1,19 +1,21 @@
 import React from 'react';
 import './App.css';
 import Footer from './components/Footer';
-import Header from './components/Header/HeaderFull';
-import HeaderMetzgerei from './components/Header/HeaderMetzgerei';
-import Home from './modules/Home';
+import { LoremIpsum } from 'react-lorem-ipsum';
+import HeaderClear from './components/Header/HeaderClear';
 import Startseite from './modules/Startseite';
 import { Routes, Route } from 'react-router-dom';
 import Product from './modules/Product';
 import Products from './modules/Products';
-import CategoryProducts from './modules/CategoryProducts';
 import Cart from './modules/Cart';
-import Login from './modules/Signup/Login';
-import Butcheries from './modules/Butcheries';
+import Login from './modules/Signup/Login/index';
+import Butcheries from './modules/Butcheries/ButcheriesDisplay';
+import ButcheryShops from './modules/Butcheries/ButcheryShopDisplay';
 import Register from './modules/Signup/Register';
-import PostDataShops from './PostData/Butchery/Butchery';
+import ButcheryCreateSelection from './modules/Butcheries/ButcheriesCreate/index';
+import ButcheriesCreate from './modules/Butcheries/ButcheriesCreate/Butchery/index';
+import ButcheryShopCreate from './modules/Butcheries/ButcheriesCreate/ButcheryShop/index';
+
 function App() {
   return (
     <div>
@@ -24,11 +26,14 @@ function App() {
         <Route path="/products/:id" element={<Product/>} />
         <Route path="/products" element={<Products/>} />
         <Route path="/login" element={<Login/>} />
-        <Route path="butcheries" element={<Butcheries/>} />
+        <Route path="/butcheries" element={<Butcheries/>} />
+        <Route path="/butchery_shops" element={<ButcheryShops/>} />
+        <Route path="/butcheryShopCreate" element={<ButcheryShopCreate/>} />
+        <Route path="/butcheriesCreate" element={<ButcheriesCreate/>} />
+        <Route path="/ButcheryCreateSelection" element={<ButcheryCreateSelection/>} />
         <Route path="/register" element={<Register/>} />
-        <Route path="/categories/:name" element={<CategoryProducts/>} />
-        <Route path="cart" element={<Cart/>} />
-        <Route path="*" element={<div>404</div>} />
+        <Route path="cart" element={<div><HeaderClear/> <Cart/></div>} />
+        <Route path="*" element={<div> <HeaderClear/> <LoremIpsum p={1}/></div>} />
       </Routes>
       <Footer/>
     </div>

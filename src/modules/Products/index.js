@@ -8,7 +8,7 @@ const Products = () => {
   const [products, setProducts] = useState([])
   useEffect(() => {
     const fetchProducts = async () => {
-      const response = await fetch('https://fakestoreapi.com/products')
+      const response = await fetch('http://meating-point.innofabrik.de/api/products')
       const data = await response.json()
       console.log(data)
       setProducts(data)
@@ -26,9 +26,9 @@ const Products = () => {
       </div>
       {
         products.length > 0 ?
-        <ProductCard products={products}/>
+        <ProductCard/>
         :
-        <div>Loading.....</div>
+        <div>Keine Produkte hinterlegt</div>
       }
     </div>
   )

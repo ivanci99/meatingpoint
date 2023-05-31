@@ -17,6 +17,7 @@ const Register = () => {
         city:"",
         phone:"",
         location:"",
+        roles:""
       });
     
       const handleChange = (e) => {
@@ -48,7 +49,8 @@ const Register = () => {
             postcode:"",
             city:"",
             phone:"",
-            location:""
+            location:"",
+            roles:""
           });
         } catch (error) {
           console.error(error);
@@ -138,6 +140,15 @@ const Register = () => {
                          type="text"
                          placeholder="Telefonnummer"
                  />
+             </div>
+             <div className="mb-3">
+             <label className="block text-gray-700 text-sm font-bold mb-1"> Rolle </label>
+               <select id="role" onChange={handleChange} value={formData.roles} className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                 <option value="">Bitte auswählen</option>
+                 <option value="User">User</option>
+                 <option value="Butcher">Butcher</option>
+                 <option value="Driver">Driver</option>
+                </select>
              </div>
              <div className="mb-3">
                  <label className="block text-gray-700 text-sm font-bold mb-1"> Standort </label>
