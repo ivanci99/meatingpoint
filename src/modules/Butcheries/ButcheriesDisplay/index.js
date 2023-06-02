@@ -1,13 +1,39 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext  } from 'react'
 import HeaderButchery from '../../../components/Header/HeaderButchery';
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 import Logo from  '../../../assets/Logo.png';
 
+
+
+
+const ButcheriesPage = () => {
+  const [selectedButchery, setSelectedButchery] = useState('');
+
+  const handleButcherySelection = (butchery) => {
+    setSelectedButchery(butchery);
+  };
+
+  return (
+    <div>
+      <h1>Butcheries Page</h1>
+      <button onClick={() => handleButcherySelection('Metzgerei A')}>Metzgerei A</button>
+      <button onClick={() => handleButcherySelection('Metzgerei B')}>Metzgerei B</button>
+      <button onClick={() => handleButcherySelection('Metzgerei C')}>Metzgerei C</button>
+
+      <h2>Ausgewählte Metzgerei: {selectedButchery}</h2>
+
+      <Link to="/order">Bestellung aufgeben</Link>
+    </div>
+  );
+};
+
+
+
 function FetchButcheries()  {
 
   const [butcheries, setButcheries] = useState([]);
-
+  
   useEffect(() => {
     axios.get('http://meating-point.innofabrik.de/api/butcheries')
     .then(
@@ -33,7 +59,7 @@ function FetchButcheries()  {
         butcheries.map((item) => {
           return (
        
-      <Link to={`/butcheries/${item.id}`} className="p-4 md:w-1/3 cursor-pointer">
+      <Link to={`/products`} className="p-4 md:w-1/3 cursor-pointer">
                   <div className="flex rounded-lg h-full bg-gray-500 p-8 flex-col">
                     <div className="flex items-center mb-3">
                       

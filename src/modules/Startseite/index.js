@@ -1,13 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import StartseitePNG from './Startseite.png';
 import order from './order.png';
 import meat from './meat.png';
 import shop from './shop.png';
-
-
 import HeaderMetzgerei from '../../components/Header/HeaderSignIn';
-import Home from '../Home'
 
 
 function App() {
@@ -25,9 +21,6 @@ function App() {
     };
     
 
-
-    
-  
   return (
 
     <div className=''>

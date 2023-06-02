@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import HeaderClear from '../../components/Header/HeaderClear';
+import Fleisch from '../../assets/bild.jpg'
 
 const Cart = () => {
   const navigate = useNavigate()
@@ -48,8 +49,37 @@ const Cart = () => {
     navigate('/cart')
   }
 
+
+  const placeOrder = () => {
+    // Zusammenstellen der Bestellung aus dem Warenkorb
+    const order = {
+      items: carts.map(item => ({
+        id: item.id,
+        quantity: item.quantity
+      })),
+      total: total
+    }
+
+    // Senden der Bestellung an die API
+    fetch('http://meating-point.innofabrik.de/api/orders', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(order)
+    })
+      .then(response => response.json())
+      .then(data => {
+        alert('Bestellung aufgegeben:', data)
+      })
+      .catch(error => {
+        console.error('Fehler beim Aufgeben der Bestellung:', error)
+      })
+  }
+
+
   if(carts.length === 0) {
-    return <div className=' h-[55vh] flex justify-center items-center text-4xl '>Warenkorb ist leer</div>
+    return <div className=' h-[55vh] flex text-gray-600 hover:text-red-600 justify-center items-center text-4xl '>Warenkorb ist leer</div>
   }
 
   return (
@@ -72,21 +102,21 @@ const Cart = () => {
               return (
                 <div className="flex items-center hover:bg-gray-100 -mx-8 px-6 py-5">
                   <div className="flex w-2/5">
-                    <div className="w-20">
-                      <img className="h-24" src={cart?.image} alt={cart?.title} />
+                    <div className="w-24">
+                      <img className="h-24" src={Fleisch} alt={cart?.name} />
                     </div>
                     <div className="flex flex-col justify-between ml-4 flex-grow">
-                      <span className="font-bold text-sm">{cart?.title}</span>
+                      <span className="font-bold text-sm ml-10">{cart?.name}</span>
                       <span className="text-red-500 text-xs capitalize">{cart?.category}</span>
-                      <div className="font-semibold hover:text-red-500 text-gray-500 text-xs cursor-pointer" onClick={() => removeProduct(cart?.id)}>Entfernen</div>
+                      <div className="font-semibold hover:text-red-500 ml-10 text-gray-500 text-xs cursor-pointer" onClick={() => removeProduct(cart?.id)}>Entfernen</div>
                     </div>
                   </div>
                   <div className="flex justify-center w-1/5">
-                    <svg className="fill-current text-gray-600 w-3 cursor-pointer" viewBox="0 0 448 512" onClick={() => handleDec(cart?.id)}><path d="M416 208H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z" />
+                     {/* Erstellt das Plus / Minus für die Navigation der Menge */}
+                    <svg className="fill-current text-gray-600 w-3 cursor-pointer" viewBox="0 0 448 512" onClick={() => handleDec(cart?.id)}>
+                      <path d="M416 208H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z" />
                     </svg>
-
                     <input className="mx-2 border text-center w-8" type="text" value={cart?.quantity} />
-
                     <svg className="fill-current text-gray-600 w-3 cursor-pointer" onClick={() => handleInc(cart?.id)} viewBox="0 0 448 512">
                       <path d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z" />
                     </svg>
@@ -98,9 +128,11 @@ const Cart = () => {
             })
           }
 
-          <Link to={'/products'} className="flex font-semibold text-indigo-600 text-sm mt-10">
+          <Link to={'/products'} className="flex font-semibold text-gray-600 hover:text-red-500 text-sm mt-10">
 
-            <svg className="fill-current mr-2 text-indigo-600 w-4" viewBox="0 0 448 512"><path d="M134.059 296H436c6.627 0 12-5.373 12-12v-56c0-6.627-5.373-12-12-12H134.059v-46.059c0-21.382-25.851-32.09-40.971-16.971L7.029 239.029c-9.373 9.373-9.373 24.569 0 33.941l86.059 86.059c15.119 15.119 40.971 4.411 40.971-16.971V296z" /></svg>
+            <svg className="fill-current mr-2 text-gray-600 hover:text-red-600 w-4" viewBox="0 0 448 512">
+              <path d="M134.059 296H436c6.627 0 12-5.373 12-12v-56c0-6.627-5.373-12-12-12H134.059v-46.059c0-21.382-25.851-32.09-40.971-16.971L7.029 239.029c-9.373 9.373-9.373 24.569 0 33.941l86.059 86.059c15.119 15.119 40.971 4.411 40.971-16.971V296z" />
+              </svg>
             Weiter Einkaufen
           </Link>
         </div>
@@ -109,7 +141,7 @@ const Cart = () => {
           <h1 className="font-semibold text-2xl border-b pb-8">Bestellzusammenfassung</h1>
           <div className="flex justify-between mt-10 mb-5">
             <span className="font-semibold text-sm uppercase">Artikel {carts?.length}</span>
-            <span className="font-semibold text-sm">{total?.toFixed(2)}$</span>
+            <span className="font-semibold text-sm">{total?.toFixed(2)}€</span>
           </div>
           <div>
             <label className="font-medium inline-block mb-3 text-sm uppercase">Verstand</label>
@@ -121,13 +153,13 @@ const Cart = () => {
             <label for="promo" className="font-semibold inline-block mb-3 text-sm uppercase">Rabattcode</label>
             <input type="text" id="promo" placeholder="Enter your code" className="p-2 text-sm w-full" />
           </div>
-          <button className="bg-red-500 hover:bg-red-600 px-5 py-2 text-sm text-white uppercase">Anwenden</button>
+          <button className="bg-gray-500 hover:bg-red-600 px-5 py-2 text-sm text-white uppercase">Anwenden</button>
           <div className="border-t mt-8">
             <div className="flex font-semibold justify-between py-6 text-sm uppercase">
               <span>Gesamt</span>
-              <span>€{(total + 10).toFixed(2)}</span>
+              <span>€{(total + 4.90).toFixed(2)}</span>
             </div>
-            <button className="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full">Zur Kasse</button>
+            <button className="bg-gray-500 font-semibold hover:bg-red-600 py-3 text-sm text-white uppercase w-full" onClick={placeOrder}>Zur Kasse</button>
           </div>
         </div>
 

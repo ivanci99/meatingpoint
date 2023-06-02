@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import FeatureCard from '../../components/ButcheryCard'
 import Hero from '../../components/Hero'
-import ProductCard from '../../components/ProductCard'
-import Products from '../../components/ProductCard'
+
+import Products from '../../modules/Products'
 
 const Home = () => {
   const [products, setProducts] = useState([])
@@ -23,12 +23,7 @@ const Home = () => {
         <h2 className="text-xs text-indigo-500 tracking-widest font-medium title-font mb-1">Produkte</h2>
         <h1 className="sm:text-3xl text-2xl font-medium title-font text-gray-900">Unsere beliebtesten Produkte</h1>
       </div>
-      {
-        products.length > 0 ? 
-        <ProductCard products={products} /> 
-        :
-        <div>Loading.....</div>
-      }
+     
       <Products />
     </>
   )
